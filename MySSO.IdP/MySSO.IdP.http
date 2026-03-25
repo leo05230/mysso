@@ -1,0 +1,6 @@
+@MySSO.IdP_HostAddress = http://localhost:5256
+
+GET {{MySSO.IdP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

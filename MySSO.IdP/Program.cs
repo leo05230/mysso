@@ -1,9 +1,21 @@
+using Microsoft.EntityFrameworkCore;
 using MySSO.IdP.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// --- 加入以下區塊 ---
+// 從 appsettings.json 取得連線字串
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    // 配置 PostgreSQL 驅動
+    options.UseNpgsql(connectionString);
+
+    // 告訴 OpenIddict 使用這個 DbContext
+    options.UseOpenIddict();
+});
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

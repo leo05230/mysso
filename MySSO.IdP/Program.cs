@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MySSO.IdP.Data;
+using MySSO.IdP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,8 @@ builder.Services.AddOpenIddict()
                .EnableAuthorizationEndpointPassthrough()
                .EnableTokenEndpointPassthrough();
     });
+// µù¥Uªì©l¤Æ Worker
+builder.Services.AddHostedService<Worker>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

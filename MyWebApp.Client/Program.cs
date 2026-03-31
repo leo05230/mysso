@@ -15,17 +15,20 @@ builder.Services.AddAuthentication(options =>
 .AddOpenIdConnect(options =>
 {
     // 必須指向你的 IdP 網址 (確認與 launchSettings.json 一致)
-    options.Authority = "https://localhost:44350/";
+    options.Authority = "https://localhost:7173/";
 
     // 與 Worker.cs 註冊的 ClientId 一致
-    options.ClientId = "my-web-app";
-    options.ClientSecret = "846B62D0-DEF9-4215-A99D-86E6B0D1B0E6";
+    options.ClientId = "my-web-app2";
+    options.ClientSecret = "846B62D0-DEF9-4215-A99D-86E6B0D1B033";
 
     options.ResponseType = "code";
     options.SaveTokens = true;
 
     // 必須與 Worker.cs 中的 RedirectUris 一致
-    options.CallbackPath = "/Privacy";
+    options.CallbackPath = "/signin-oidc";
+
+    options.NonceCookie.SameSite = SameSiteMode.Unspecified;
+    options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
 });
 var app = builder.Build();
 

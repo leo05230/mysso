@@ -13,19 +13,19 @@ public class Worker : IHostedService
     {
         using var scope = _serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        //await context.Database.EnsureCreatedAsync();
+        await context.Database.EnsureCreatedAsync();
 
         var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
 
         // 檢查是否已存在 Client，若無則建立
-        if (await manager.FindByClientIdAsync("my-web-app") is null)
+        if (await manager.FindByClientIdAsync("my-web-app2") is null)
         {
             await manager.CreateAsync(new OpenIddictApplicationDescriptor
             {
-                ClientId = "my-web-app",
-                ClientSecret = "846B62D0-DEF9-4215-A99D-86E6B0D1B0E6",
+                ClientId = "my-web-app2",
+                ClientSecret = "846B62D0-DEF9-4215-A99D-86E6B0D1B033",
                 DisplayName = "我的測試前端",
-                RedirectUris = { new Uri("https://localhost:44305/Privacy") },
+                RedirectUris = { new Uri("https://localhost:7193/signin-oidc") },
                 Permissions =
                 {
                     Permissions.Endpoints.Authorization,

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MySSO.IdP.Data;
 using MySSO.IdP.Services;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // --- 加入以下區塊 ---
 // 從 appsettings.json 取得連線字串
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowFrontend", policy => {
+        policy.WithOrigins("http://localhost:3000") // 換成你前端的網址
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -30,6 +39,8 @@ builder.Services.AddOpenIddict()
                .SetTokenEndpointUris("/connect/token")
                .SetEndSessionEndpointUris("/connect/logout");
 
+        // --- 加入這行：註冊伺服器支援的權限範圍 ---
+        options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles);
         options.AllowAuthorizationCodeFlow().RequireProofKeyForCodeExchange(); // 強制使用 PKCE (大型專案標配)
 
         // GCP 部署關鍵：在正式環境應從 Cloud KMS 取得憑證
@@ -59,6 +70,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 

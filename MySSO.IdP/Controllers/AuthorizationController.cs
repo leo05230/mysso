@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
@@ -11,9 +11,8 @@ namespace MySSO.IdP.Controllers;
 
 public class AuthorizationController : Controller
 {
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     [HttpGet("~/connect/authorize")]
-    [HttpPost("~/connect/authorize")]
-    [IgnoreAntiforgeryToken]
     public async Task<IActionResult> Authorize()
     {
         var request = HttpContext.GetOpenIddictServerRequest() ??

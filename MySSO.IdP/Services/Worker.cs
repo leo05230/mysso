@@ -25,7 +25,7 @@ public class Worker : IHostedService
                 ClientId = "my-web-app",
                 ClientSecret = "846B62D0-DEF9-4215-A99D-86E6B0D1B0E6",
                 DisplayName = "我的測試前端",
-                RedirectUris = { new Uri("https://localhost:7001/signin-oidc") },
+                RedirectUris = { new Uri("https://localhost:44305/Privacy") },
                 Permissions =
                 {
                     Permissions.Endpoints.Authorization,

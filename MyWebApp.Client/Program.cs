@@ -25,7 +25,7 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
 
     // 必須與 Worker.cs 中的 RedirectUris 一致
-    options.CallbackPath = "/signin-oidc";
+    options.CallbackPath = "/Privacy";
 });
 var app = builder.Build();
 

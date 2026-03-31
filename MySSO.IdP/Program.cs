@@ -12,7 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowFrontend", policy => {
-        policy.WithOrigins("http://localhost:3000") // 換成你前端的網址
+        policy.WithOrigins("http://localhost:44305") // 換成你前端的網址
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
